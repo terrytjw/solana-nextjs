@@ -59,8 +59,8 @@ export const AppBar = () => {
           if (newPublicKey) {
             console.log(`Switched to account ${newPublicKey.toBase58()}`);
 
-            await connect();
-            console.log(`Switch successful`);
+            // await connect();
+            // console.log(`Switch successful`);
           }
         } catch (err) {
           console.error("Failed to connect to the new account:", err);
