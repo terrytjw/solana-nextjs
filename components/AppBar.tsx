@@ -3,7 +3,7 @@
 require("@solana/wallet-adapter-react-ui/styles.css");
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -40,6 +40,42 @@ const WalletMultiButton = dynamic(
 // );
 
 export const AppBar = () => {
+  const { publicKey, connect, disconnect } = useWallet();
+
+  // TODO: find a fix for connecting wallet automatically on phantom wallet account change
+  //       currently, disconnect() works, but connect() doesn't
+  useEffect(() => {
+    // @ts-ignore
+    const provider = window.solana;
+
+    if (provider) {
+      const handleAccountChange = async (newPublicKey: any) => {
+        console.log("provider -> ", provider);
+        try {
+          // Disconnect the current wallet session
+          await disconnect();
+
+          // Reconnect to the new account
+          if (newPublicKey) {
+            console.log(`Switched to account ${newPublicKey.toBase58()}`);
+
+            await connect();
+            console.log(`Switch successful`);
+          }
+        } catch (err) {
+          console.error("Failed to connect to the new account:", err);
+        }
+      };
+
+      provider.on("accountChanged", handleAccountChange);
+
+      // Clean up the event listener when the component unmounts
+      return () => {
+        provider.removeListener("accountChanged", handleAccountChange);
+      };
+    }
+  }, [disconnect, connect]);
+
   return (
     <div className="flex justify-between border-b-[0.1px] border-gray-600 px-8 py-4">
       <Image src="/solanaLogo.png" alt="solana-logo" height={20} width={300} />
