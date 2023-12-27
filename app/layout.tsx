@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import WalletContextProvider from "@/components/WalletContextProvider";
+import { AppBar } from "@/components/AppBar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={IS_DEV_MODE ? "debug-screens" : ""}>
-      <body className={inter.className}>{children}</body>
-    </html>
+    <WalletContextProvider>
+      <html lang="en" className={IS_DEV_MODE ? "debug-screens" : ""}>
+        <body className={inter.className}>
+          <AppBar />
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </WalletContextProvider>
   );
 }
