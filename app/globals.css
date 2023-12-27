@@ -75,14 +75,14 @@
   }
 }
 
-.wallet-adapter-button {
+.wallet-adapter-button-trigger {
   /* background-color: rgb(241, 241, 241); */
   border: 0.1rem solid white;
   border-radius: 0.6rem;
   color: white;
 }
 
-.wallet-adapter-button:hover {
+.wallet-adapter-button-trigger:hover {
   transition: all 0.2s ease;
   background-color: rgb(45, 45, 45) !important;
   border: 0.1rem solid rgb(131, 131, 131);
