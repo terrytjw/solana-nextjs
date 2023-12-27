@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import WalletContextProvider from "@/components/WalletContextProvider";
 import { AppBar } from "@/components/AppBar";
 import { Toaster } from "react-hot-toast";
+import WalletContextProvider from "@/components/WalletContextProvider";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,22 @@ export default function RootLayout({
 }) {
   return (
     <WalletContextProvider>
-      <html lang="en" className={IS_DEV_MODE ? "debug-screens" : ""}>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={IS_DEV_MODE ? "debug-screens" : ""}
+      >
         <body className={inter.className}>
-          <AppBar />
-          {children}
-          <Toaster />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AppBar />
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </WalletContextProvider>

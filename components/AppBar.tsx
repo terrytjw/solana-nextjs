@@ -5,6 +5,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 // Use of next/dynamic is needed because the @solana/wallet-adapter-react-ui library likely contains
 // components that have browser-specific code, which is not executed on the server when Next.js does
@@ -40,9 +41,12 @@ const WalletMultiButton = dynamic(
 
 export const AppBar = () => {
   return (
-    <div className="flex justify-between bg-stone-500 p-4">
-      <Image src="/solanaLogo.png" alt="solana-logo" height={20} width={400} />
-      <WalletMultiButton />
+    <div className="flex justify-between bg-stone-900 px-8 py-4">
+      <Image src="/solanaLogo.png" alt="solana-logo" height={20} width={300} />
+      <div className="flex items-center gap-x-2">
+        <WalletMultiButton />
+        <ThemeToggle />
+      </div>
     </div>
   );
 };
