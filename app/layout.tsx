@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppBar } from "@/components/AppBar";
 import { Toaster } from "react-hot-toast";
+import { Toaster as ShadcnToaster } from "@/components/ui/toaster";
 import WalletContextProvider from "@/components/WalletContextProvider";
 import ThemeProvider from "@/components/ThemeProvider";
 
@@ -37,6 +38,7 @@ export default function RootLayout({
             <AppBar />
             {children}
             <Toaster />
+            <ShadcnToaster />
           </ThemeProvider>
         </body>
       </html>
