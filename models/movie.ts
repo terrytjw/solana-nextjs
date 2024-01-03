@@ -34,7 +34,7 @@ export class Movie {
     ),
   ];
 
-  // Borsh schema defines how the movie data should be serialized/deserialized in the program
+  // Borsh schema defines how the movie data should be serialized in the program
   // note that order matters. if the order of the properties here differs from how the program is structured, the TX will fail
   borshInstructionSchema = borsh.struct([
     borsh.u8("variant"),
@@ -48,5 +48,27 @@ export class Movie {
     this.borshInstructionSchema.encode({ ...this, variant: 0 }, buffer);
 
     return buffer.subarray(0, this.borshInstructionSchema.getSpan(buffer)); // you're returning something like this: 01100100 01101111 01100111 00100000 01100011 01100001 01110100 which contains the movie data
+  }
+
+  static borshAccountSchema = borsh.struct([
+    borsh.bool("initialized"),
+    borsh.u8("rating"),
+    borsh.str("title"),
+    borsh.str("description"),
+  ]);
+
+  static deserialize(buffer?: Buffer): Movie | null {
+    if (!buffer) {
+      return null;
+    }
+
+    try {
+      const { title, rating, description } =
+        this.borshAccountSchema.decode(buffer);
+      return new Movie(title, rating, description);
+    } catch (error) {
+      console.log("Deserialization error:", error);
+      return null;
+    }
   }
 }

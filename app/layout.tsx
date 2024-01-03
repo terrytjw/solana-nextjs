@@ -37,6 +37,9 @@ export default function RootLayout({
           >
             <AppBar />
             {children}
+            <div className="border-t border-gray-600 p-6 text-center text-sm italic tracking-widest text-gray-300">
+              Built with ❤️ by Terry.
+            </div>
             <Toaster />
             <ShadcnToaster />
           </ThemeProvider>

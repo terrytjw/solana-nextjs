@@ -50,7 +50,6 @@ export const AppBar = () => {
 
     if (provider) {
       const handleAccountChange = async (newPublicKey: any) => {
-        console.log("provider -> ", provider);
         try {
           // Disconnect the current wallet session
           await disconnect();
@@ -78,7 +77,13 @@ export const AppBar = () => {
 
   return (
     <div className="flex justify-between border-b-[0.1px] border-gray-600 px-8 py-4">
-      <Image src="/solanaLogo.png" alt="solana-logo" height={20} width={300} />
+      <Image
+        src="/solanaLogo.png"
+        alt="solana-logo"
+        height={20}
+        width={300}
+        priority
+      />
       <div className="flex items-center gap-x-2">
         <WalletMultiButton />
         {/* <ThemeToggle /> */}
